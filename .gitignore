@@ -1,0 +1,12 @@
+# Java / Maven
+backend/target/
+backend/.mvn/
+backend/mvnw*
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.npm-cache/
+
+# OS
+.DS_Store
