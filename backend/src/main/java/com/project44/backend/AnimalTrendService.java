@@ -14,4 +14,12 @@ public class AnimalTrendService {
     public List<AnimalTrend> getTopTrends() {
         return repository.findTop10ByOrderByScoreDesc();
     }
+
+    public AnimalTrend save(AnimalTrend trend) {
+        long likes = trend.getLikes() == null ? 0 : trend.getLikes();
+        long shares = trend.getShares() == null ? 0 : trend.getShares();
+        long comments = trend.getComments() == null ? 0 : trend.getComments();
+        trend.setScore((double) (likes + shares + comments));
+        return repository.save(trend);
+    }
 }
