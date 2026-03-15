@@ -11,6 +11,7 @@ import java.util.List;
 @CrossOrigin(origins = {
         "http://localhost:5173",
         "https://www.3xample.ca",
+        "https://3xample.ca",
         "https://ankygautam.github.io"
 })
 public class AnimalController {

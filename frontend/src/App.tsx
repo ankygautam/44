@@ -8,6 +8,21 @@ function App() {
   return (
     <div className="page">
       <header className="hero">
+        <div className="hero-top">
+          <p className="brand">Viral Animal Tracker</p>
+          <div className="hero-nav">
+            <button className={view === 'live' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('live')}>
+              Live board
+            </button>
+            <button className={view === 'about' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('about')}>
+              About
+            </button>
+            <button className="nav-btn" onClick={() => window.location.reload()}>
+              Refresh
+            </button>
+          </div>
+        </div>
+
         <div className="halo" aria-hidden />
         <p className="eyebrow">Viral Animal Tracker</p>
         <h1>See which animals are blowing up across platforms.</h1>

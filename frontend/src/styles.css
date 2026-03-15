@@ -39,6 +39,42 @@ body {
   gap: 16px;
 }
 
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4338ca;
+}
+
+.hero-nav {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nav-btn.active {
+  background: linear-gradient(120deg, #8b5cf6, #6366f1);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.28);
+}
+
 .hero .halo {
   position: absolute;
   inset: -30% auto auto 50%;
