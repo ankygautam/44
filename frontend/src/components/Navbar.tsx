@@ -16,8 +16,6 @@ export default function Navbar({ theme, onToggleTheme }: Props) {
         />
       </div>
       <div className="flex items-center gap-2 text-sm text-white/80 flex-wrap justify-end">
-        <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2"> <Filter className="h-4 w-4" /> Platform </button>
-        <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2"> <Clock3 className="h-4 w-4" /> 6h </button>
         <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2" onClick={onToggleTheme}>
           {theme === 'dark' ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
           {theme === 'dark' ? 'Light theme' : 'Dark theme'}
