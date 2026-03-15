@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: radial-gradient(circle at 20% 20%, #f8fbff 0, #f3f5ff 25%, #eef4ff 45%, #fdfbff 100%);
+  --panel: rgba(255, 255, 255, 0.84);
+  --border: #e2e8f0;
+  --ink: #0f172a;
+  --muted: #475569;
+  --accent: #8b5cf6;
+  --accent-2: #22d3ee;
+  --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 28px;
+  background: linear-gradient(120deg, rgba(139, 92, 246, 0.12), rgba(34, 211, 238, 0.12));
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+}
+
+.hero .halo {
+  position: absolute;
+  inset: -30% auto auto 50%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.35), transparent 60%);
+  filter: blur(40px);
+  opacity: 0.7;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(32px, 4vw, 42px);
+  line-height: 1.05;
+}
+
+.hero .lede {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+button.primary {
+  background: linear-gradient(120deg, #8b5cf6, #6366f1);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.32);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+button.ghost {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--ink);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.primary:hover { transform: translateY(-1px); }
+
+.panel {
+  margin-top: 26px;
+  padding: 20px;
+  background: var(--panel);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.12);
+  color: #4338ca;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.08));
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: white;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 20px;
+  color: #312e81;
+}
+
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.tile h3 { margin: 0; font-size: 18px; }
+.tile p { margin: 0; }
+
+.meta {
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.score {
+  text-align: right;
+  color: var(--ink);
+}
+
+.score .total { font-weight: 800; }
+
+.empty-state {
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.error {
+  margin-top: 8px;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding: 22px;
+  }
+  .panel-header { flex-direction: column; align-items: flex-start; }
+}
