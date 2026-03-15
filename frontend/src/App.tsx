@@ -1,7 +1,7 @@
-import { useRef } from 'react';
 import TrendingAnimals from './TrendingAnimals';
 import About from './About';
 
+function App() {
   return (
     <div className="page">
       <header className="hero">
