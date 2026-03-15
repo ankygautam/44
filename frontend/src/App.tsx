@@ -7,7 +7,7 @@ import TrendCard from './components/TrendCard';
 import TrendChart from './components/TrendChart';
 import PlatformBadge from './components/PlatformBadge';
 import About from './About';
-import { API_BASE } from './config';
+import { fetchAnimalTrends, type AnimalTrend } from './api';
 
 const colorMap: Record<string, string> = {
   Reddit: '#ff4500',
@@ -21,9 +21,7 @@ function App() {
   const getRoute = () => (window.location.hash.replace('#', '') || '/');
   const [route, setRoute] = useState<string>(getRoute());
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [animalTrends, setAnimalTrends] = useState<
-    { id: number; name: string; platform: string; likes: number; shares: number; createdAt?: string }[]
-  >([]);
+  const [animalTrends, setAnimalTrends] = useState<AnimalTrend[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,9 +30,7 @@ function App() {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch(`${API_BASE}/api/animals/trending`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+        const data = await fetchAnimalTrends();
         setAnimalTrends(data);
       } catch (e) {
         setError('Unable to load trending animals. Check that the API is reachable.');
