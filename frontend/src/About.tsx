@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section className="panel">
+    <section id="about">
       <p className="eyebrow">About ViralAnimalTracker</p>
       <h2 style={{ marginTop: 6 }}>The Internet’s Animal Dashboard</h2>
       <p className="lede">

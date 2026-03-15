@@ -1,9 +1,6 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import TrendingAnimals from './TrendingAnimals';
 import About from './About';
-
-function App() {
-  const [view, setView] = useState<'live' | 'about'>('live');
 
   return (
     <div className="page">
@@ -11,10 +8,10 @@ function App() {
         <div className="hero-top">
           <p className="brand">Viral Animal Tracker</p>
           <div className="hero-nav">
-            <button className={view === 'live' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('live')}>
+            <button className="nav-btn" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
               Live board
             </button>
-            <button className={view === 'about' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('about')}>
+            <button className="nav-btn" onClick={() => document.getElementById('about-panel')?.scrollIntoView({ behavior: 'smooth' })}>
               About
             </button>
           </div>
@@ -27,10 +24,10 @@ function App() {
           Live pull from <code>/api/animals/trending</code>. Refresh to keep tabs on what the internet is talking about.
         </p>
         <div className="hero-actions">
-          <button className="primary" onClick={() => setView('live')}>
+          <button className="primary" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
             View trending board
           </button>
-          <button className="ghost" onClick={() => setView('about')}>
+          <button className="ghost" onClick={() => document.getElementById('about-panel')?.scrollIntoView({ behavior: 'smooth' })}>
             About
           </button>
           <button className="ghost" onClick={() => window.location.reload()}>
@@ -39,16 +36,14 @@ function App() {
         </div>
       </header>
 
-      <div className="tabs">
-        <button className={view === 'live' ? 'tab active' : 'tab'} onClick={() => setView('live')}>
-          Live board
-        </button>
-        <button className={view === 'about' ? 'tab active' : 'tab'} onClick={() => setView('about')}>
-          About
-        </button>
-      </div>
-
-      {view === 'live' ? <TrendingAnimals /> : <About />}
+      <section className="content-grid">
+        <div className="panel tall" id="board">
+          <TrendingAnimals />
+        </div>
+        <div className="panel about-panel" id="about-panel">
+          <About />
+        </div>
+      </section>
     </div>
   );
 }

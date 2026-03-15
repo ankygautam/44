@@ -265,9 +265,26 @@ button.primary:hover { transform: translateY(-1px); }
   line-height: 1.5;
 }
 
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.about-panel {
+  position: sticky;
+  top: 20px;
+}
+
+.tall {
+  min-height: 480px;
+}
+
 @media (max-width: 720px) {
   .hero {
     padding: 22px;
   }
   .panel-header { flex-direction: column; align-items: flex-start; }
+  .content-grid { grid-template-columns: 1fr; }
 }
