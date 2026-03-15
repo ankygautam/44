@@ -1,17 +1,21 @@
 import { Sparkles, Flame, Globe2, LayoutDashboard, MonitorDot, ShieldQuestion, Telescope, Watch } from 'lucide-react';
 
 const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard' },
-  { icon: Sparkles, label: 'Viral Animals' },
-  { icon: Globe2, label: 'World News' },
-  { icon: MonitorDot, label: 'Internet Memes' },
-  { icon: ShieldQuestion, label: 'Conflicts' },
-  { icon: Telescope, label: 'Trending Now' },
-  { icon: Watch, label: 'Watchlist' }
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
+  { icon: Sparkles, label: 'Viral Animals', path: '/viral-animals' },
+  { icon: Globe2, label: 'World News', path: '/world-news' },
+  { icon: MonitorDot, label: 'Internet Memes', path: '/memes' },
+  { icon: ShieldQuestion, label: 'Conflicts', path: '/conflicts' },
+  { icon: Telescope, label: 'Trending Now', path: '/trending' },
+  { icon: Watch, label: 'Watchlist', path: '/watchlist' }
 ];
 
-export default function Sidebar() {
-  const active = 'Dashboard';
+type Props = {
+  activePath: string;
+  onNavigate: (path: string) => void;
+};
+
+export default function Sidebar({ activePath, onNavigate }: Props) {
 
   return (
     <aside className="hidden lg:flex flex-col w-64 glass rounded-3xl p-4 gap-6">
@@ -26,12 +30,13 @@ export default function Sidebar() {
       </div>
 
       <nav className="space-y-2">
-        {navItems.map((item, idx) => (
+        {navItems.map((item) => (
           <button
             key={item.label}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-white/80 hover:bg-white/5 border border-transparent hover:border-white/10 transition ${
-              item.label === active ? 'bg-white/5 border-white/10 text-white' : ''
+              item.path === activePath ? 'bg-white/5 border-white/10 text-white' : ''
             }`}
+            onClick={() => onNavigate(item.path)}
           >
             <item.icon className="h-4 w-4 text-cyan-400" />
             {item.label}
