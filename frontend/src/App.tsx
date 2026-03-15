@@ -15,8 +15,11 @@ function App() {
           Live pull from <code>/api/animals/trending</code>. Refresh to keep tabs on what the internet is talking about.
         </p>
         <div className="hero-actions">
-          <button className="primary" onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}>
+          <button className="primary" onClick={() => setView('live')}>
             View trending board
+          </button>
+          <button className="ghost" onClick={() => setView('about')}>
+            About
           </button>
           <button className="ghost" onClick={() => window.location.reload()}>
             Quick refresh
