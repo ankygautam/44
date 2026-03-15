@@ -14,9 +14,6 @@ function App() {
             <button className={view === 'live' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('live')}>
               Live board
             </button>
-            <button className={view === 'about' ? 'nav-btn active' : 'nav-btn'} onClick={() => setView('about')}>
-              About
-            </button>
             <button className="nav-btn" onClick={() => window.location.reload()}>
               Refresh
             </button>
