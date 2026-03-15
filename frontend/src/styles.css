@@ -281,6 +281,10 @@ button.primary:hover { transform: translateY(-1px); }
   min-height: 480px;
 }
 
+.about-page {
+  margin-top: 24px;
+}
+
 @media (max-width: 720px) {
   .hero {
     padding: 22px;
