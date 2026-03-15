@@ -11,9 +11,6 @@ import About from './About';
             <button className="nav-btn" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
               Live board
             </button>
-            <button className="nav-btn" onClick={() => document.getElementById('about-panel')?.scrollIntoView({ behavior: 'smooth' })}>
-              About
-            </button>
           </div>
         </div>
 
@@ -26,9 +23,6 @@ import About from './About';
         <div className="hero-actions">
           <button className="primary" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
             View trending board
-          </button>
-          <button className="ghost" onClick={() => document.getElementById('about-panel')?.scrollIntoView({ behavior: 'smooth' })}>
-            About
           </button>
           <button className="ghost" onClick={() => window.location.reload()}>
             Quick refresh
