@@ -32,7 +32,6 @@ function App() {
         </div>
 
         <div className="halo" aria-hidden />
-        <p className="eyebrow">Viral Animal Tracker</p>
         <h1>Real-Time Animal Virality Dashboard</h1>
         <p className="lede">
           Track trending animals across social platforms using automated data signals and engagement velocity.
