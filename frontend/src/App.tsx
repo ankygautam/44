@@ -35,7 +35,7 @@ function App() {
         <p className="eyebrow">Viral Animal Tracker</p>
         <h1>Real-Time Animal Virality Dashboard</h1>
         <p className="lede">
-          Track trending animals across social platforms using automated data signals pulled from <code>/api/animals/trending</code>.
+          Track trending animals across social platforms using automated data signals and engagement velocity.
         </p>
         <div className="hero-actions">
           <button className="primary" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
