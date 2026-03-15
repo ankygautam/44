@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import TrendingAnimals from './TrendingAnimals';
+import About from './About';
 
 function App() {
+  const [view, setView] = useState<'live' | 'about'>('live');
+
   return (
     <div className="page">
       <header className="hero">
@@ -20,7 +24,16 @@ function App() {
         </div>
       </header>
 
-      <TrendingAnimals />
+      <div className="tabs">
+        <button className={view === 'live' ? 'tab active' : 'tab'} onClick={() => setView('live')}>
+          Live board
+        </button>
+        <button className={view === 'about' ? 'tab active' : 'tab'} onClick={() => setView('about')}>
+          About
+        </button>
+      </div>
+
+      {view === 'live' ? <TrendingAnimals /> : <About />}
     </div>
   );
 }
