@@ -16,9 +16,9 @@ import About from './About';
 
         <div className="halo" aria-hidden />
         <p className="eyebrow">Viral Animal Tracker</p>
-        <h1>See which animals are blowing up across platforms.</h1>
+        <h1>Real-Time Animal Virality Dashboard</h1>
         <p className="lede">
-          Live pull from <code>/api/animals/trending</code>. Refresh to keep tabs on what the internet is talking about.
+          Track trending animals across social platforms using automated data signals pulled from <code>/api/animals/trending</code>.
         </p>
         <div className="hero-actions">
           <button className="primary" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
