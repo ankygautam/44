@@ -11,6 +11,8 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const active = 'Viral Animals';
+
   return (
     <aside className="hidden lg:flex flex-col w-64 glass rounded-3xl p-4 gap-6">
       <div className="flex items-center gap-3">
@@ -28,7 +30,7 @@ export default function Sidebar() {
           <button
             key={item.label}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-white/80 hover:bg-white/5 border border-transparent hover:border-white/10 transition ${
-              idx === 0 ? 'bg-white/5 border-white/10 text-white' : ''
+              item.label === active ? 'bg-white/5 border-white/10 text-white' : ''
             }`}
           >
             <item.icon className="h-4 w-4 text-cyan-400" />
