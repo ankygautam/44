@@ -8,7 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/animals")
-@CrossOrigin(origins = {"http://localhost:5173", "https://www.3xample.ca"})
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://www.3xample.ca",
+        "https://ankygautam.github.io"
+})
 public class AnimalController {
     private final AnimalService animalService;
 
