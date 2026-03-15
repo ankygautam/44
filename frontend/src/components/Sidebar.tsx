@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const active = 'Viral Animals';
+  const active = 'Dashboard';
 
   return (
     <aside className="hidden lg:flex flex-col w-64 glass rounded-3xl p-4 gap-6">
