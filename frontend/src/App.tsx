@@ -19,6 +19,18 @@ const trends = [
   { title: 'Capybara on Metro', category: 'Viral Animals', platform: 'Reddit', score: 11800, mentions: 7700, growth: 31, emoji: '🦫' }
 ];
 
+const colorMap: Record<string, string> = {
+  Reddit: '#ff4500',
+  X: '#60a5fa',
+  TikTok: '#22d3ee',
+  YouTube: '#facc15',
+  News: '#a855f7'
+};
+
+function App() {
+  const getRoute = () => (window.location.hash.replace('#', '') || '/');
+  const [route, setRoute] = useState<string>(getRoute());
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const filteredTrends = route === '/viral-animals' ? trends.filter((t) => t.category === 'Viral Animals') : trends;
 
   const platformCounts = filteredTrends.reduce<Record<string, number>>((acc, cur) => {
@@ -26,21 +38,11 @@ const trends = [
     return acc;
   }, {});
 
-  const platforms = Object.entries(platformCounts).map(([label, count]) => {
-    const colorMap: Record<string, string> = {
-      Reddit: '#ff4500',
-      X: '#60a5fa',
-      TikTok: '#22d3ee',
-      YouTube: '#facc15',
-      News: '#a855f7'
-    };
-    return { label, count, color: colorMap[label] || '#8b5cf6' };
-  });
-
-function App() {
-  const getRoute = () => (window.location.hash.replace('#', '') || '/');
-  const [route, setRoute] = useState<string>(getRoute());
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const platforms = Object.entries(platformCounts).map(([label, count]) => ({
+    label,
+    count,
+    color: colorMap[label] || '#8b5cf6'
+  }));
 
   useEffect(() => {
     const onHashChange = () => setRoute(getRoute());
