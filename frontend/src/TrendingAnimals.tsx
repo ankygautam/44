@@ -28,7 +28,7 @@ export default function TrendingAnimals() {
       setAnimals(data);
       setError('');
     } catch (err) {
-      setError('Unable to load trending animals. Is the backend running on :8080?');
+      setError('Unable to load trending animals. Check that the API is reachable.');
     } finally {
       setLoading(false);
     }
