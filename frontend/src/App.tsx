@@ -1,6 +1,29 @@
 import { useEffect, useState } from 'react';
-import TrendingAnimals from './TrendingAnimals';
+import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
+import TrendCard from './components/TrendCard';
+import TrendChart from './components/TrendChart';
+import PlatformBadge from './components/PlatformBadge';
 import About from './About';
+
+const trends = [
+  { title: 'Punch the Monkey', category: 'Internet Meme', score: 18920, mentions: 12800, growth: 42, emoji: '🐒' },
+  { title: 'Viral Penguin Story', category: 'World News', score: 14210, mentions: 9100, growth: 28, emoji: '🐧' },
+  { title: 'Peanut the Squirrel', category: 'Viral Animals', score: 12100, mentions: 8200, growth: 33, emoji: '🐿' },
+  { title: 'Ukraine War Update', category: 'Conflicts', score: 21100, mentions: 15000, growth: 18, emoji: '🌍' },
+  { title: 'Skyline TikTok Dance', category: 'TikTok', score: 9800, mentions: 7200, growth: 55, emoji: '🎵' },
+  { title: 'Mars Rover Meme', category: 'Science', score: 7600, mentions: 5400, growth: 21, emoji: '🚀' }
+];
+
+const platforms = [
+  { label: 'Reddit', count: 12400, color: '#ff4500' },
+  { label: 'X', count: 9800, color: '#60a5fa' },
+  { label: 'TikTok', count: 11200, color: '#22d3ee' },
+  { label: 'YouTube', count: 8600, color: '#facc15' },
+  { label: 'News', count: 7300, color: '#a855f7' }
+];
 
 function App() {
   const getRoute = () => (window.location.hash.replace('#', '') || '/');
@@ -16,50 +39,93 @@ function App() {
     window.location.hash = path;
   };
 
-  return (
-    <div className="page">
-      <header className="hero">
-        <div className="hero-top">
-          <p className="brand">Viral Animal Tracker</p>
-          <div className="hero-nav">
-            <button className={route === '/' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('/')}>
-              Live board
-            </button>
-            <button className={route === '/about' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('/about')}>
-              About
-            </button>
+  if (route === '/about') {
+    return (
+      <div className="min-h-screen bg-[#0b0f1a] text-white">
+        <div className="max-w-6xl mx-auto p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center font-bold">TP</div>
+              <div>
+                <p className="text-sm text-white/60">TrendPulse</p>
+                <p className="text-xs text-white/40">Intelligence</p>
+              </div>
+            </div>
+            <button className="glass px-3 py-2 rounded-xl text-sm font-semibold" onClick={() => go('/')}>Back to dashboard</button>
           </div>
-        </div>
-
-        <div className="halo" aria-hidden />
-        <h1>Real-Time Animal Virality Dashboard</h1>
-        <p className="lede">
-          Track trending animals across social platforms using automated data signals and engagement velocity.
-        </p>
-        <div className="hero-actions">
-          <button className="primary" onClick={() => document.getElementById('board')?.scrollIntoView({ behavior: 'smooth' })}>
-            View trending board
-          </button>
-          <button className="ghost" onClick={() => window.location.reload()}>
-            Quick refresh
-          </button>
-        </div>
-      </header>
-
-      {route === '/about' ? (
-        <section className="panel about-page" id="about-panel">
-          <About />
-        </section>
-      ) : (
-        <section className="content-grid">
-          <div className="panel tall" id="board">
-            <TrendingAnimals />
-          </div>
-          <div className="panel about-panel" id="about-panel">
+          <section className="glass rounded-3xl p-6 border border-white/10">
             <About />
-          </div>
-        </section>
-      )}
+          </section>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0b0f1a] text-white">
+      <div className="max-w-7xl mx-auto p-4 md:p-6 flex gap-4">
+        <Sidebar />
+        <div className="flex-1 flex flex-col gap-4">
+          <Navbar />
+
+          <motion.section
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass rounded-3xl p-6 relative overflow-hidden border border-white/10"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-500/10" />
+            <div className="relative flex flex-col gap-3">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/60">Viral Trend Intelligence</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-white">Real-Time Viral Trend Intelligence</h1>
+              <p className="text-white/70 max-w-2xl">
+                Track what is exploding across the internet before it becomes mainstream. Automated signals from animals, news,
+                memes, and conflicts in a single pane of glass.
+              </p>
+              <div className="flex flex-wrap gap-3 mt-2">
+                <button className="bg-gradient-to-r from-cyan-500 to-purple-600 px-4 py-2 rounded-xl font-semibold text-white shadow-glow">
+                  Live Pulse
+                </button>
+                <button className="glass px-4 py-2 rounded-xl font-semibold text-white border border-white/10" onClick={() => go('/about')}>
+                  About platform
+                </button>
+              </div>
+            </div>
+          </motion.section>
+
+          <section className="grid lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-2 space-y-4">
+              <TrendChart />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {platforms.map((p) => (
+                  <PlatformBadge key={p.label} {...p} />
+                ))}
+              </div>
+            </div>
+            <div className="glass rounded-2xl p-4 border border-white/10 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">Live Signals</p>
+                  <h3 className="text-lg font-semibold">Alerts</h3>
+                </div>
+                <Sparkles className="h-5 w-5 text-cyan-300" />
+              </div>
+              <div className="space-y-2 text-sm text-white/80">
+                <div className="glass p-3 rounded-xl border border-white/10">Reddit spike: “Viral Penguin Story” +230% in 1h</div>
+                <div className="glass p-3 rounded-xl border border-white/10">TikTok mentions up 55%: “Skyline dance”</div>
+                <div className="glass p-3 rounded-xl border border-white/10">News velocity: Conflict coverage +18% overnight</div>
+              </div>
+            </div>
+          </section>
+
+          <section className="card-grid">
+            {trends.map((trend, idx) => (
+              <motion.div key={trend.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}>
+                <TrendCard {...trend} />
+              </motion.div>
+            ))}
+          </section>
+        </div>
+      </div>
     </div>
   );
 }

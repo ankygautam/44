@@ -16,6 +16,12 @@
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
     "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.27",
+    "framer-motion": "^12.36.0",
+    "lucide-react": "^0.577.0",
+    "postcss": "^8.5.8",
+    "recharts": "^3.8.0",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.3.3",
     "vite": "^5.2.0"
   }
