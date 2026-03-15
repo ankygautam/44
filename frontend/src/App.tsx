@@ -7,17 +7,7 @@ import TrendCard from './components/TrendCard';
 import TrendChart from './components/TrendChart';
 import PlatformBadge from './components/PlatformBadge';
 import About from './About';
-
-const trends = [
-  { title: 'Punch the Monkey', category: 'Internet Meme', platform: 'Reddit', score: 18920, mentions: 12800, growth: 42, emoji: '🐒' },
-  { title: 'Viral Penguin Story', category: 'World News', platform: 'News', score: 14210, mentions: 9100, growth: 28, emoji: '🐧' },
-  { title: 'Peanut the Squirrel', category: 'Viral Animals', platform: 'TikTok', score: 12100, mentions: 8200, growth: 33, emoji: '🐿' },
-  { title: 'Ukraine War Update', category: 'Conflicts', platform: 'News', score: 21100, mentions: 15000, growth: 18, emoji: '🌍' },
-  { title: 'Skyline TikTok Dance', category: 'TikTok', platform: 'TikTok', score: 9800, mentions: 7200, growth: 55, emoji: '🎵' },
-  { title: 'Mars Rover Meme', category: 'Science', platform: 'X', score: 7600, mentions: 5400, growth: 21, emoji: '🚀' },
-  { title: 'Otter Cam Frenzy', category: 'Viral Animals', platform: 'YouTube', score: 13400, mentions: 9400, growth: 26, emoji: '🦦' },
-  { title: 'Capybara on Metro', category: 'Viral Animals', platform: 'Reddit', score: 11800, mentions: 7700, growth: 31, emoji: '🦫' }
-];
+import { API_BASE } from './config';
 
 const colorMap: Record<string, string> = {
   Reddit: '#ff4500',
@@ -31,10 +21,38 @@ function App() {
   const getRoute = () => (window.location.hash.replace('#', '') || '/');
   const [route, setRoute] = useState<string>(getRoute());
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const filteredTrends = route === '/viral-animals' ? trends.filter((t) => t.category === 'Viral Animals') : trends;
+  const [animalTrends, setAnimalTrends] = useState<
+    { id: number; name: string; platform: string; likes: number; shares: number; createdAt?: string }[]
+  >([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const res = await fetch(`${API_BASE}/api/animals/trending`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setAnimalTrends(data);
+      } catch (e) {
+        setError('Unable to load trending animals. Check that the API is reachable.');
+        setAnimalTrends([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const filteredTrends =
+    route === '/viral-animals'
+      ? animalTrends.filter((t) => (t.platform || '').toLowerCase().includes('animal'))
+      : animalTrends;
 
   const platformCounts = filteredTrends.reduce<Record<string, number>>((acc, cur) => {
-    acc[cur.platform] = (acc[cur.platform] || 0) + cur.mentions;
+    acc[cur.platform] = (acc[cur.platform] || 0) + (cur.likes ?? 0);
     return acc;
   }, {});
 
@@ -140,11 +158,27 @@ function App() {
           </section>
 
           <section className="card-grid">
-            {trends.map((trend, idx) => (
-              <motion.div key={trend.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}>
-                <TrendCard {...trend} />
-              </motion.div>
-            ))}
+            {loading && <div className="text-white/70 text-sm">Loading trending animals...</div>}
+            {error && <div className="text-red-400 text-sm">{error}</div>}
+            {!loading &&
+              !error &&
+              filteredTrends.map((trend, idx) => (
+                <motion.div
+                  key={trend.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.04 }}
+                >
+                  <TrendCard
+                    title={trend.name}
+                    category={trend.platform || 'Viral Animals'}
+                    score={(trend.likes ?? 0) + (trend.shares ?? 0)}
+                    mentions={trend.likes ?? 0}
+                    growth={Math.max(0, Math.round((trend.shares ?? 0)))}
+                    emoji="🐾"
+                  />
+                </motion.div>
+              ))}
           </section>
         </div>
       </div>
