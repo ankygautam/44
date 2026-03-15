@@ -28,6 +28,7 @@ const platforms = [
 function App() {
   const getRoute = () => (window.location.hash.replace('#', '') || '/');
   const [route, setRoute] = useState<string>(getRoute());
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
     const onHashChange = () => setRoute(getRoute());
@@ -38,6 +39,13 @@ function App() {
   const go = (path: string) => {
     window.location.hash = path;
   };
+
+  useEffect(() => {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
   if (route === '/about') {
     return (
@@ -66,7 +74,7 @@ function App() {
       <div className="max-w-7xl mx-auto p-4 md:p-6 flex gap-4">
         <Sidebar />
         <div className="flex-1 flex flex-col gap-4">
-          <Navbar />
+          <Navbar theme={theme} onToggleTheme={toggleTheme} />
 
           <motion.section
             initial={{ opacity: 0, y: 10 }}

@@ -1,6 +1,11 @@
-import { Search, Filter, Clock3, Sun } from 'lucide-react';
+import { Search, Filter, Clock3, Sun, MoonStar } from 'lucide-react';
 
-export default function Navbar() {
+type Props = {
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
+};
+
+export default function Navbar({ theme, onToggleTheme }: Props) {
   return (
     <div className="glass rounded-2xl px-4 py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2 w-full md:w-1/2">
@@ -13,7 +18,10 @@ export default function Navbar() {
       <div className="flex items-center gap-2 text-sm text-white/80 flex-wrap justify-end">
         <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2"> <Filter className="h-4 w-4" /> Platform </button>
         <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2"> <Clock3 className="h-4 w-4" /> 6h </button>
-        <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2"> <Sun className="h-4 w-4" /> Theme </button>
+        <button className="glass px-3 py-2 rounded-xl border border-white/10 flex items-center gap-2" onClick={onToggleTheme}>
+          {theme === 'dark' ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
+          {theme === 'dark' ? 'Light theme' : 'Dark theme'}
+        </button>
       </div>
     </div>
   );

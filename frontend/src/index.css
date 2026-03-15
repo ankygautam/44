@@ -39,3 +39,33 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+body.theme-light {
+  background: linear-gradient(180deg, #f4f6fb 0%, #edf1f9 60%, #f7f9ff 100%);
+  color: #0f172a;
+}
+
+body.theme-light .glass {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  border-color: #e5e7eb;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+body.theme-light .nav-btn {
+  background: #eef2ff;
+  color: #111827;
+  border-color: #e5e7eb;
+}
+
+body.theme-light h1,
+body.theme-light h2,
+body.theme-light h3,
+body.theme-light p {
+  color: #0f172a;
+}
+
+body.theme-light .badge {
+  color: #0f172a;
+  border-color: #e5e7eb;
+}
