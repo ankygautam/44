@@ -10,7 +10,8 @@ export type AnimalTrend = {
 };
 
 export async function fetchAnimalTrends(): Promise<AnimalTrend[]> {
-  const res = await fetch(`${API_BASE}/api/animals/trending`);
+  const base = API_BASE || 'https://four4-0oyk.onrender.com';
+  const res = await fetch(`${base}/api/animals/trending`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }

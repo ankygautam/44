@@ -32,6 +32,7 @@ function App() {
         setError('');
         const data = await fetchAnimalTrends();
         setAnimalTrends(data);
+        console.log('API trends:', data);
       } catch (e) {
         setError('Unable to load trending animals. Check that the API is reachable.');
         setAnimalTrends([]);
@@ -48,7 +49,8 @@ function App() {
       : animalTrends;
 
   const platformCounts = filteredTrends.reduce<Record<string, number>>((acc, cur) => {
-    acc[cur.platform] = (acc[cur.platform] || 0) + (cur.likes ?? 0);
+    const key = cur.platform ?? 'unknown';
+    acc[key] = (acc[key] || 0) + (cur.likes ?? 0);
     return acc;
   }, {});
 
@@ -156,6 +158,9 @@ function App() {
           <section className="card-grid">
             {loading && <div className="text-white/70 text-sm">Loading trending animals...</div>}
             {error && <div className="text-red-400 text-sm">{error}</div>}
+            {!loading && !error && filteredTrends.length === 0 && (
+              <div className="text-white/70 text-sm">No viral trends found yet.</div>
+            )}
             {!loading &&
               !error &&
               filteredTrends.map((trend, idx) => (
@@ -170,8 +175,8 @@ function App() {
                     category={trend.platform || 'Viral Animals'}
                     score={(trend.likes ?? 0) + (trend.shares ?? 0)}
                     mentions={trend.likes ?? 0}
-                    growth={Math.max(0, Math.round((trend.shares ?? 0)))}
-                    emoji="🐾"
+                    growth={Math.max(0, Math.round(trend.shares ?? 0))}
+                    emoji="🔥"
                   />
                 </motion.div>
               ))}
