@@ -20,9 +20,9 @@ public class GoogleTrendService {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
-    private final AnimalTrendService trendService;
+    private final TrendItemService trendService;
 
-    public GoogleTrendService(AnimalTrendService trendService) {
+    public GoogleTrendService(TrendItemService trendService) {
         this.trendService = trendService;
     }
 
@@ -63,9 +63,10 @@ public class GoogleTrendService {
                     }
                 }
 
-                AnimalTrend at = new AnimalTrend();
+                TrendItem at = new TrendItem();
                 at.setTitle(title);
-                at.setAnimalName(title);
+                at.setTopic(title);
+                at.setCategory("news");
                 at.setPlatform("google");
                 at.setSourceUrl(trend.path("articles").isArray() && trend.path("articles").size() > 0
                         ? trend.path("articles").get(0).path("url").asText("")
@@ -74,11 +75,10 @@ public class GoogleTrendService {
                 at.setLikes(score);
                 at.setShares(0L);
                 at.setComments(0L);
-                at.setScore((double) score);
                 at.setKeyword(extractKeyword(title));
                 at.setDetectedAt(OffsetDateTime.now());
 
-                trendService.save(at);
+                trendService.saveOrUpdate(at);
             }
         } catch (Exception ignored) {
             // fail silently to avoid breaking app

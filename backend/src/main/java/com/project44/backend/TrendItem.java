@@ -4,14 +4,18 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "animal_trends")
-public class AnimalTrend {
+@Table(name = "trend_items", indexes = {
+        @Index(name = "idx_platform_source", columnList = "platform,sourceUrl", unique = false),
+        @Index(name = "idx_platform_title", columnList = "platform,title", unique = false)
+})
+public class TrendItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
-    private String animalName;
+    private String topic;
+    private String category;
     private String platform;
     private String sourceUrl;
     private Long mentions;
@@ -24,31 +28,16 @@ public class AnimalTrend {
     private String imageUrl;
     private OffsetDateTime detectedAt = OffsetDateTime.now();
 
-    public AnimalTrend() {}
+    public TrendItem() {}
 
-    public AnimalTrend(String title, String animalName, String platform, String sourceUrl, Long mentions, Long likes,
-                       Long shares, Long comments, Double score, String keyword, String sentiment, String imageUrl,
-                       OffsetDateTime detectedAt) {
-        this.title = title;
-        this.animalName = animalName;
-        this.platform = platform;
-        this.sourceUrl = sourceUrl;
-        this.mentions = mentions;
-        this.likes = likes;
-        this.shares = shares;
-        this.comments = comments;
-        this.score = score;
-        this.keyword = keyword;
-        this.sentiment = sentiment;
-        this.imageUrl = imageUrl;
-        this.detectedAt = detectedAt;
-    }
-
+    // getters and setters
     public Long getId() { return id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
-    public String getAnimalName() { return animalName; }
-    public void setAnimalName(String animalName) { this.animalName = animalName; }
+    public String getTopic() { return topic; }
+    public void setTopic(String topic) { this.topic = topic; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
     public String getPlatform() { return platform; }
     public void setPlatform(String platform) { this.platform = platform; }
     public String getSourceUrl() { return sourceUrl; }

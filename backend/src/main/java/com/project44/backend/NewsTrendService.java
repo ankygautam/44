@@ -21,9 +21,9 @@ public class NewsTrendService {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
-    private final AnimalTrendService trendService;
+    private final TrendItemService trendService;
 
-    public NewsTrendService(AnimalTrendService trendService) {
+    public NewsTrendService(TrendItemService trendService) {
         this.trendService = trendService;
     }
 
@@ -48,22 +48,22 @@ public class NewsTrendService {
                 String title = article.path("title").asText("");
                 if (!containsAnimalKeyword(title)) continue;
 
-                AnimalTrend trend = new AnimalTrend();
+                TrendItem trend = new TrendItem();
                 trend.setTitle(title);
-                trend.setAnimalName(title);
+                trend.setTopic(title);
+                trend.setCategory("news");
                 trend.setPlatform("news");
                 trend.setSourceUrl(article.path("url").asText(""));
                 trend.setMentions(0L);
                 trend.setLikes(1L); // minimal signal so score is non-zero
                 trend.setShares(0L);
                 trend.setComments(0L);
-                trend.setScore(1.0);
                 trend.setKeyword(extractKeyword(title));
                 trend.setSentiment(null);
                 trend.setImageUrl(article.path("urlToImage").asText(null));
                 trend.setDetectedAt(OffsetDateTime.now());
 
-                trendService.save(trend);
+                trendService.saveOrUpdate(trend);
             }
         } catch (Exception ignored) {
             // ignore to keep app running if NewsAPI fails

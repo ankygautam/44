@@ -21,9 +21,9 @@ public class RedditTrendService {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
-    private final AnimalTrendService trendService;
+    private final TrendItemService trendService;
 
-    public RedditTrendService(AnimalTrendService trendService) {
+    public RedditTrendService(TrendItemService trendService) {
         this.trendService = trendService;
     }
 
@@ -55,22 +55,22 @@ public class RedditTrendService {
                 long comments = data.path("num_comments").asLong(0);
                 double score = upvotes + comments;
 
-                AnimalTrend trend = new AnimalTrend();
+                TrendItem trend = new TrendItem();
                 trend.setTitle(title);
-                trend.setAnimalName(title);
+                trend.setTopic(title);
+                trend.setCategory("animals");
                 trend.setPlatform("reddit");
                 trend.setSourceUrl(url);
                 trend.setLikes(upvotes);
                 trend.setMentions(upvotes);
                 trend.setShares(0L);
                 trend.setComments(comments);
-                trend.setScore(score);
                 trend.setKeyword(extractKeyword(title));
                 trend.setSentiment(null);
                 trend.setImageUrl(data.path("thumbnail").asText(null));
                 trend.setDetectedAt(OffsetDateTime.now());
 
-                trendService.save(trend);
+                trendService.saveOrUpdate(trend);
             }
         } catch (Exception ignored) {
             // Swallow errors to avoid breaking app if Reddit is unreachable
