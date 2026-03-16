@@ -24,6 +24,16 @@ public class TrendItemService {
         return repository.findTop10ByOrderByScoreDesc();
     }
 
+    public List<TrendItem> topByEngagement() {
+        return repository.findAll().stream()
+                .sorted((a, b) -> Long.compare(
+                        (b.getLikes() == null ? 0 : b.getLikes()) + (b.getShares() == null ? 0 : b.getShares()),
+                        (a.getLikes() == null ? 0 : a.getLikes()) + (a.getShares() == null ? 0 : a.getShares())
+                ))
+                .limit(10)
+                .toList();
+    }
+
     public List<TrendItem> latest() {
         return repository.findTop10ByOrderByDetectedAtDesc();
     }
