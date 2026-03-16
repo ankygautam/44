@@ -7,7 +7,7 @@ import TrendCard from './components/TrendCard';
 import TrendChart from './components/TrendChart';
 import PlatformBadge from './components/PlatformBadge';
 import About from './About';
-import { fetchAnimalTrends, type AnimalTrend } from './api';
+import { fetchTrends, type AnimalTrend } from './api';
 
 const colorMap: Record<string, string> = {
   Reddit: '#ff4500',
@@ -27,14 +27,14 @@ function App() {
 
   useEffect(() => {
     const load = async () => {
+      setLoading(true);
+      setError('');
       try {
-        setLoading(true);
-        setError('');
-        const data = await fetchAnimalTrends();
-        setAnimalTrends(data);
-        console.log('API trends:', data);
+        const data = await fetchTrends();
+        setAnimalTrends(data || []);
+        console.log('API response:', data);
       } catch (e) {
-        setError('Unable to load trending animals. Check that the API is reachable.');
+        setError('Unable to load trending animals.');
         setAnimalTrends([]);
       } finally {
         setLoading(false);
@@ -156,10 +156,15 @@ function App() {
           </section>
 
           <section className="card-grid">
-            {loading && <div className="text-white/70 text-sm">Loading trending animals...</div>}
-            {error && <div className="text-red-400 text-sm">{error}</div>}
+            {loading && <div className="text-white/70 text-sm">Loading viral trends...</div>}
+            {error && (
+              <div className="text-red-400 text-sm space-y-1">
+                <div>{error}</div>
+                <div>Backend URL: https://four4-0oyk.onrender.com/api/animals/trending</div>
+              </div>
+            )}
             {!loading && !error && filteredTrends.length === 0 && (
-              <div className="text-white/70 text-sm">No viral trends found yet.</div>
+              <div className="text-white/70 text-sm">No trends available.</div>
             )}
             {!loading &&
               !error &&
