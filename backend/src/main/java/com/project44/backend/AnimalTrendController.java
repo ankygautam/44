@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/animals")
@@ -18,7 +19,11 @@ public class AnimalTrendController {
     }
 
     @GetMapping("/trending")
-    public List<AnimalTrend> trending() {
-        return service.getTopTrends();
+    public List<TrendDto> trending() {
+        return service.getTopTrends().stream()
+                .map(t -> new TrendDto(t.getTitle(), t.getPlatform(), t.getScore(), t.getSourceUrl(), t.getDetectedAt()))
+                .collect(Collectors.toList());
     }
+
+    public record TrendDto(String title, String platform, Double score, String sourceUrl, java.time.OffsetDateTime detectedAt) { }
 }
